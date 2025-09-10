@@ -1,60 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Pagdi Carousel Filter</title>
+    <title>Navratri Pagdi Filter</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-    <style>
-        body {
-            margin: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            background-color: #f0f0f0;
-            font-family: sans-serif;
-            -webkit-user-select: none;  /* Prevent text selection on mobile */
-            -moz-user-select: none;
-            -ms-user-select: none;
-            user-select: none;
-        }
-
-        #ar-frame {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        #controls {
-            position: absolute;
-            bottom: 20px;
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 20px;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 16px;
-            font-weight: bold;
-            background-color: #ffffff;
-            border: 2px solid #333;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            cursor: pointer;
-            transition: transform 0.1s ease-in-out;
-            color: #333;
-        }
-
-        button:active {
-            transform: scale(0.95);
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <h1 id="title">Happy Navratri!</h1>
 
     <iframe id="ar-frame" src="" allow="camera; gyroscope; microphone"></iframe>
 
@@ -65,9 +21,9 @@
 
     <script>
         const filterUrls = [
-            'https://navratripagdi.netlify.app',
-            'https://pagdi1.netlify.app',
-            'https://pagdi2.netlify.app'
+            'https://your-username.github.io/pagdi1/',
+            'https://your-username.github.io/pagdi2/',
+            'https://your-username.github.io/pagdi3/'
         ];
 
         let currentFilterIndex = 0;
@@ -89,12 +45,10 @@
             loadFilter();
         });
 
-        // Load the first filter when the page loads
         document.addEventListener('DOMContentLoaded', () => {
             loadFilter();
         });
     </script>
 
 </body>
-
 </html>
