@@ -1,54 +1,297 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Navratri Pagdi Filter</title>
+    <title>Navrang Pagdi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
-    <link rel="stylesheet" href="style.css">
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* CSS from the "From The Ashes" file */
+        @keyframes rise {
+            0% { transform: translateY(0) scale(0.8); opacity: 0; }
+            20% { opacity: 1; }
+            80% { opacity: 1; }
+            100% { transform: translateY(-100vh) scale(1.2); opacity: 0; }
+        }
+        
+        .ember {
+            position: absolute;
+            bottom: 0;
+            background: radial-gradient(circle, rgba(255, 220, 100, 0.7) 0%, rgba(255, 150, 50, 0.6) 30%, rgba(200, 80, 0, 0.4) 60%, rgba(100, 30, 0, 0) 90%);
+            border-radius: 50%;
+            animation: rise linear infinite;
+            filter: blur(0.5px);
+            box-shadow: 0 0 5px 1px rgba(255, 150, 50, 0.3);
+            z-index: 1; /* Ensure embers are behind content */
+        }
+        
+        html {
+            background-color: #000000;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(to bottom, #000000 0%, #2a0000 30%, #6a1a0a 70%, #8a2a1a 100%);
+            height: 100vh;
+            color: #fff;
+            text-align: center;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            position: relative;
+            z-index: 0;
+        }
+        
+        .bg-texture {
+            background-image: 
+                radial-gradient(circle at 50% 100%, rgba(255, 120, 0, 0.25) 0%, transparent 70%),
+                radial-gradient(circle at 30% 20%, rgba(255, 80, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 70% 30%, rgba(255, 50, 0, 0.2) 0%, transparent 60%);
+            background-size: 100% 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        /* Navrang Pagdi Content Styling */
+        #landing-page, #color-options, #filter-page {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            box-sizing: border-box;
+            transition: opacity 0.5s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+        
+        #landing-page.hidden, #color-options.hidden, #filter-page.hidden {
+            opacity: 0;
+            pointer-events: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        h1, h2 {
+            font-family: 'Cormorant', serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(255, 200, 100, 0.8);
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            font-size: 4em;
+        }
+
+        h2 {
+            font-size: 2em;
+        }
+
+        p {
+            font-size: 1.2em;
+            max-width: 80%;
+            margin-bottom: 30px;
+            line-height: 1.6em;
+        }
+
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            font-weight: bold;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            backdrop-filter: blur(8px);
+        }
+
+        button:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+        }
+
+        button:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #options-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 20px;
+        }
+
+        .color-option {
+            width: 120px;
+            height: 120px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+            border: 2px solid transparent;
+        }
+
+        .color-option:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+            border: 2px solid #FFD700;
+        }
+
+        #description-box {
+            font-size: 1em;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            min-height: 50px;
+            max-width: 80%;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            position: relative;
+            z-index: 3;
+            backdrop-filter: blur(4px);
+        }
+
+        #description-box.visible {
+            opacity: 1;
+        }
+
+        #back-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+        }
+        
+    </style>
 </head>
-<body>
+<body class="min-h-screen text-white relative">
+    
+    <div class="bg-texture"></div>
+    <div id="embers-container" class="fixed inset-0 pointer-events-none z-0"></div>
 
-    <h1 id="title">Happy Navratri!</h1>
+    <div id="landing-page">
+        <h1>Navrang Pagdi</h1>
+        <p>Step into the festive spirit of Navratri with our exclusive collection of three vibrant pagdi filters. Find the perfect color to match your celebrations!</p>
+        <button id="enter-button">Enter</button>
+    </div>
 
-    <iframe id="ar-frame" src="" allow="camera; gyroscope; microphone"></iframe>
+    <div id="color-options" class="hidden">
+        <h2>Choose Your Pagdi</h2>
+        <div id="options-container">
+            <div class="color-option" data-url="pagdi1_url" data-color="Red" data-desc="The color of passion and divine power, representing the fierce form of Goddess Durga." style="background-color: #FF0000;"></div>
+            <div class="color-option" data-url="pagdi2_url" data-color="Royal Blue" data-desc="Symbolizes tranquility and divine energy, often associated with Goddess Brahmacharini." style="background-color: #4169E1;"></div>
+            <div class="color-option" data-url="pagdi3_url" data-color="Green" data-desc="Represents nature and growth, signifying new beginnings and prosperity during the festival." style="background-color: #008000;"></div>
+        </div>
+        <div id="description-box">Hover over a color to learn more!</div>
+        <button id="back-to-landing">Back</button>
+    </div>
 
-    <div id="controls">
-        <button id="prev-btn">Previous</button>
-        <button id="next-btn">Next</button>
+    <div id="filter-page" class="hidden">
+        <iframe id="ar-frame" src="" allow="camera; gyroscope; microphone"></iframe>
+        <button id="back-button">Back to Colors</button>
     </div>
 
     <script>
-        const filterUrls = [
-            'https://your-username.github.io/pagdi1/',
-            'https://your-username.github.io/pagdi2/',
-            'https://your-username.github.io/pagdi3/'
-        ];
-
-        let currentFilterIndex = 0;
-        const arFrame = document.getElementById('ar-frame');
-        const prevBtn = document.getElementById('prev-btn');
-        const nextBtn = document.getElementById('next-btn');
-
-        function loadFilter() {
-            arFrame.src = filterUrls[currentFilterIndex];
-        }
-
-        prevBtn.addEventListener('click', () => {
-            currentFilterIndex = (currentFilterIndex - 1 + filterUrls.length) % filterUrls.length;
-            loadFilter();
-        });
-
-        nextBtn.addEventListener('click', () => {
-            currentFilterIndex = (currentFilterIndex + 1) % filterUrls.length;
-            loadFilter();
-        });
-
+        // JavaScript for the embers animation and page functionality
         document.addEventListener('DOMContentLoaded', () => {
-            loadFilter();
+            // Embers animation script
+            const container = document.getElementById('embers-container');
+            function createEmber() {
+                const ember = document.createElement('div');
+                ember.classList.add('ember');
+                const size = Math.random() * 5 + 3;
+                ember.style.width = `${size}px`;
+                ember.style.height = `${size}px`;
+                ember.style.left = `${Math.random() * 100}%`;
+                const duration = Math.random() * 10 + 5;
+                ember.style.animationDuration = `${duration}s`;
+                ember.style.animationDelay = `${Math.random() * 5}s`;
+                container.appendChild(ember);
+                setTimeout(() => { ember.remove(); }, duration * 1000);
+            }
+            for (let i = 0; i < 30; i++) {
+                createEmber();
+            }
+            setInterval(createEmber, 500);
+
+            // Page functionality script
+            const landingPage = document.getElementById('landing-page');
+            const colorOptionsPage = document.getElementById('color-options');
+            const filterPage = document.getElementById('filter-page');
+            const enterButton = document.getElementById('enter-button');
+            const backToLandingButton = document.getElementById('back-to-landing');
+            const backButton = document.getElementById('back-button');
+            const colorOptions = document.querySelectorAll('.color-option');
+            const descriptionBox = document.getElementById('description-box');
+            const arFrame = document.getElementById('ar-frame');
+
+            // Set your filter URLs here
+            const filterUrls = {
+                pagdi1_url: 'https://navratripagdi.netlify.app',
+                pagdi2_url: 'https://pagdi1.netlify.app',
+                pagdi3_url: 'https://pagdi2.netlify.app',
+            };
+
+            enterButton.addEventListener('click', () => {
+                landingPage.classList.add('hidden');
+                colorOptionsPage.classList.remove('hidden');
+            });
+
+            backToLandingButton.addEventListener('click', () => {
+                colorOptionsPage.classList.add('hidden');
+                landingPage.classList.remove('hidden');
+            });
+
+            colorOptions.forEach(option => {
+                option.addEventListener('mouseenter', () => {
+                    const color = option.getAttribute('data-color');
+                    const desc = option.getAttribute('data-desc');
+                    descriptionBox.innerHTML = `<strong>${color}:</strong> ${desc}`;
+                    descriptionBox.classList.add('visible');
+                });
+                option.addEventListener('mouseleave', () => {
+                    descriptionBox.innerHTML = `Hover over a color to learn more!`;
+                    descriptionBox.classList.remove('visible');
+                });
+                option.addEventListener('click', () => {
+                    const urlKey = option.getAttribute('data-url');
+                    arFrame.src = filterUrls[urlKey];
+                    colorOptionsPage.classList.add('hidden');
+                    filterPage.classList.remove('hidden');
+                });
+            });
+
+            backButton.addEventListener('click', () => {
+                filterPage.classList.add('hidden');
+                colorOptionsPage.classList.remove('hidden');
+            });
         });
     </script>
-
 </body>
 </html>
